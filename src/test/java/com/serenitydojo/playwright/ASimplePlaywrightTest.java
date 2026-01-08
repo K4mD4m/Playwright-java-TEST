@@ -22,4 +22,22 @@ public class ASimplePlaywrightTest {
         browser.close();
         playwright.close();
     }
+
+    @Test
+    void shouldSearchByKeyword() {
+        Playwright playwright = Playwright.create();
+        Browser browser = playwright.chromium().launch();
+        Page page = browser.newPage();
+
+        page.navigate("https://www.practicesoftwaretesting.com/");
+        page.locator("[placeholder=Search]").fill("Pilers");
+        page.locator("button:has-text('Search')").click();
+
+        int matchingSearchResults = page.locator(".card").count();
+
+        Assertions.assertTrue(matchingSearchResults > 0);
+
+        browser.close();
+        playwright.close();
+    }
 }
